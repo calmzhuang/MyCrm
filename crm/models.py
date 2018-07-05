@@ -23,12 +23,16 @@ class Customer(models.Model):
     consult_course = models.ForeignKey("Course", on_delete=models.CASCADE, verbose_name='咨询课程')
     content = models.TextField(verbose_name='咨询详情')
     consultant = models.ForeignKey("UserProfile", on_delete=models.CASCADE, verbose_name='跟进销售')
-    tags = models.ManyToManyField("Tag", blank=True, null=True, verbose_name='客户对应标签')
+    tags = models.ManyToManyField("Tag", blank=True, verbose_name='客户对应标签')
     create_date = models.DateTimeField(auto_now_add=True, verbose_name='创建时间')
     update_date = models.DateTimeField(auto_now=True, verbose_name='更新时间')
 
     def __str__(self):
         return self.qq
+
+    class Meta:
+        verbose_name = '客户信息表'
+        verbose_name_plural = '客户信息表'
 
 class Tag(models.Model):
     name = models.CharField(max_length=32, unique=True, verbose_name='标签')
@@ -36,6 +40,9 @@ class Tag(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = '标签表'
+        verbose_name_plural = '标签表'
 
 class CustomerFollowUp(models.Model):
     '''客户跟进表'''
@@ -55,6 +62,10 @@ class CustomerFollowUp(models.Model):
     def __str__(self):
         return "<%s : %s>" % (self.customer.qq, self.intention)
 
+    class Meta:
+        verbose_name = '客户跟进表'
+        verbose_name_plural = '客户跟进表'
+
 
 class Course(models.Model):
     '''课程表'''
@@ -66,6 +77,10 @@ class Course(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        verbose_name = '课程表'
+        verbose_name_plural = '课程表'
+
 class Branch(models.Model):
     '''校区'''
     name = models.CharField(max_length=128, unique=True, verbose_name='校区名称')
@@ -73,6 +88,10 @@ class Branch(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '校区表'
+        verbose_name_plural = '校区表'
 
 class ClassList(models.Model):
     '''班级表'''
@@ -94,6 +113,8 @@ class ClassList(models.Model):
 
     class Meta:
         unique_together = ('branch', 'course', 'semester')
+        verbose_name = '班级表'
+        verbose_name_plural = '班级表'
 
 class CourseRecord(models.Model):
     '''上课记录'''
@@ -111,6 +132,8 @@ class CourseRecord(models.Model):
 
     class Meta:
         unique_together = ('from_class', 'day_num')
+        verbose_name = '上课记录表'
+        verbose_name_plural = '上课记录表'
 
 class StudentRecord(models.Model):
     '''学习记录'''
@@ -144,6 +167,11 @@ class StudentRecord(models.Model):
     def __str__(self):
         return "%s %s %s" % (self.student, self.course_record, self.score)
 
+    class Meta:
+        unique_together = ('student', 'course_record')
+        verbose_name = '学习记录表'
+        verbose_name_plural = '学习记录表'
+
 class Enrollment(models.Model):
     '''报名表'''
     customer = models.ForeignKey("Customer", on_delete=models.CASCADE, verbose_name='客户')
@@ -158,6 +186,8 @@ class Enrollment(models.Model):
 
     class Meta:
         unique_together = ('customer', 'enrolled_class')
+        verbose_name = '报名表'
+        verbose_name_plural = '报名表'
 
 class Payment(models.Model):
     '''缴费记录'''
@@ -170,17 +200,30 @@ class Payment(models.Model):
     def __str__(self):
         return "%s %s" % (self.customer, self.amount)
 
+    class Meta:
+        verbose_name = '缴费记录表'
+        verbose_name_plural = '缴费记录表'
+
 class UserProfile(models.Model):
     '''账号表'''
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=32, verbose_name='用户名')
-    roles = models.ManyToManyField("Role", blank=True, null=True, verbose_name='关联角色')
+    roles = models.ManyToManyField("Role", blank=True, verbose_name='关联角色')
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '账号表'
+        verbose_name_plural = '账号表'
 
 class Role(models.Model):
     '''角色表'''
     name = models.CharField(max_length=32, unique=True, verbose_name='角色级别')
+
     def __str__(self):
         return self.name
+
+    class Meta:
+        verbose_name = '角色表'
+        verbose_name_plural = '角色表'
