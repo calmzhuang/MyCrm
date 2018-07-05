@@ -220,6 +220,7 @@ class UserProfile(models.Model):
 class Role(models.Model):
     '''角色表'''
     name = models.CharField(max_length=32, unique=True, verbose_name='角色级别')
+    menus = models.ManyToManyField("Menu", blank=True, verbose_name='对应菜单')
 
     def __str__(self):
         return self.name
@@ -227,3 +228,15 @@ class Role(models.Model):
     class Meta:
         verbose_name = '角色表'
         verbose_name_plural = '角色表'
+
+class Menu(models.Model):
+    '''菜单表'''
+    name = models.CharField(max_length=32, verbose_name='菜单名')
+    url_name = models.CharField(max_length=64, verbose_name='别名')
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        verbose_name = '菜单表'
+        verbose_name_plural = '菜单表'
