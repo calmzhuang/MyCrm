@@ -19,4 +19,6 @@ from django.urls import path, include, re_path
 urlpatterns = [
     path('admin/', admin.site.urls),
     re_path('^crm/', include("crm.urls")),
+    re_path('^student/', include("student.urls")),
+    re_path('^king_admin/', include("king_admin.urls")),
 ]
