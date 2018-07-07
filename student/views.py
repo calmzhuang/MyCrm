@@ -5,4 +5,4 @@ def index(request):
     return render(request, 'index.html')
 
 def student_index(request):
-    return render(request, 'student_index.html')
+    return render(request, 'student/student_index.html')
