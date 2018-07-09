@@ -1,8 +1,9 @@
 {%  extends 'king_admin/table_index.html' %}
 {% load tags %}
 
+{% block css %}
 
-
+{% endblock %}
 
 {% block container %}
     {{ admin_class.list_display }}
@@ -20,8 +21,9 @@
                     </div>
 
                   {% endfor %}
-
-                    <button type="SUBMIT" class="btn btn-success">检索</button>
+                    <div class="col-lg-1" style="margin-top: 20px">
+                        <button type="SUBMIT" class="btn btn-info dropdown-toggle">检索</button>
+                    </div>
                 </form>
 
                </div>
@@ -43,35 +45,33 @@
                     {% endfor %}
                   </tbody>
               </table>
-
-
-
-          <nav>
-              <ul class="pagination">
-                  {% if query_sets.has_previous %}
-                        <li class=""><a href="?page={{ query_sets.previous_page_number }}">上页</a></li>
-                  {% endif %}
-{#                   <li class="active"><a>{{ query_sets.number }}</a></li>#}
-
-                  {% for loop_counter in query_sets.paginator.page_range %}
-                        {% render_page_ele  loop_counter query_sets%}
-                  {% endfor %}
-
-                  {% if query_sets.has_next %}
-                        <li class=""><a href="?page={{ query_sets.next_page_number }}">下页</a></li>
-                  {% endif %}
-
-
-{#                <li class="disabled"><a href="#">&laquo;</a></li>#}
-{#                <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>#}
-{#                #}
-              </ul>
+          <nav style="cursor: pointer;">
+                <ul class="pagination pagination-sm" id="page1" style="display: inline;"></ul>
+                <div class="pageJump" style="display: inline; margin: auto 10px;">
+                    <span>跳转到</span>
+                    <input type="text"/>
+                    <span>页</span>
+                    <button type="button" class="btn btn-info dropdown-toggle" style="cursor: pointer;">确定</button>
+                </div>
           </nav>
-
-
-
           </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="/statics/js/pager.js"></script>
+    <script>
+        Page({
+			num:{{ query_sets.paginator.num_pages }},		//页码数
+			startnum:{{ admin_class.list_per_page }},		//指定页码
+			elem:$('#page1'),		//指定的元素
+            urls:'{% url 'table_data_list' %}',
+            admin_class_detail:'["{{ app_name }}", "{{ table_name }}"]',
+			callback:function(n){	//回调函数
+				console.log(n);
+			}
+		});
+    </script>
 {% endblock %}
 
 

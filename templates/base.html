@@ -29,6 +29,10 @@
       <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <link href="/statics/css/dashboard.css" rel="stylesheet">
+    {% block css %}
+    {% endblock %}
   </head>
     {% block body %}
     {% endblock %}
@@ -42,4 +46,6 @@
     <script src="/statics/js/holder.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="/statics/js/ie10-viewport-bug-workaround.js"></script>
+    {% block js %}
+    {% endblock %}
 </html>

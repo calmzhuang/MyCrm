@@ -7,15 +7,15 @@ class Customer(models.Model):
     '''客户信息表'''
     name = models.CharField(max_length=32, null=True, blank=True, verbose_name='客户名称')#blank作用：django-admin中可以为空
     qq = models.CharField(max_length=64, null=False, unique=True, verbose_name='客户QQ')
-    qq_name = models.CharField(max_length=64, blank=True, null=True, verbose_name='客户名称')
+    qq_name = models.CharField(max_length=64, blank=True, null=True, verbose_name='客户QQ名称')
     phone = models.CharField(max_length=64, blank=True, null=True, verbose_name='客户手机号')
-    source_choices = (('0', '转介绍'),
-                     ('1', 'QQ群'),
-                     ('2', '官网'),
-                     ('3', '百度推广'),
-                     ('4', '51CTO'),
-                     ('5', '知乎'),
-                     ('6', '市场推广'),
+    source_choices = ((0, '转介绍'),
+                     (1, 'QQ群'),
+                     (2, '官网'),
+                     (3, '百度推广'),
+                     (4, '51CTO'),
+                     (5, '知乎'),
+                     (6, '市场推广'),
                      )
     source = models.SmallIntegerField(choices=source_choices, verbose_name='客户介绍来源')
     referral_from = models.CharField(max_length=64, blank=True, null=True, verbose_name='客户介绍人')
