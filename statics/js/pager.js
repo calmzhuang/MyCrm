@@ -23,10 +23,8 @@ function Page(opt){
 							}
 							if (page1 >= (clickpages.num - 2) || clickpages.num <= 6 || page1 < 3) {
 								ele = clickpages.elem.children('li.active').next();
-								// clickpages.getdatalist(page1+1)
 							} else {
 								clickpages.newPages('next', page1 + 1);
-								// clickpages.getdatalist(page1+1);
 								ele = clickpages.elem.children('li.active');
 							}
 							break;
@@ -36,10 +34,8 @@ function Page(opt){
 							}
 							if (page1 >= (clickpages.num - 1) || page1 <= 3 || clickpages.num <= 6) {
 								ele = clickpages.elem.children('li.active').prev();
-								// clickpages.getdatalist(page1-1);
 							} else {
 								clickpages.newPages('prev', page1 - 1);
-								// clickpages.getdatalist(page1-1);
 								ele = clickpages.elem.children('li.active');
 							}
 							break;
@@ -49,7 +45,6 @@ function Page(opt){
 							}
 							if (clickpages.num > 6) {
 								clickpages.newPages('«', 1);
-								// clickpages.getdatalist(1);
 							}
 							ele = clickpages.elem.children('li[page=1]');
 							break;
@@ -61,7 +56,6 @@ function Page(opt){
 								clickpages.newPages('»', clickpages.num);
 							}
 							ele = clickpages.elem.children('li[page=' + clickpages.num + ']');
-							// clickpages.getdatalist(clickpages.num);
 							break;
 						case '...':
 							return;
@@ -76,7 +70,7 @@ function Page(opt){
 				page = clickpages.actPages(ele);
 				if (page != '' && page != page1) {
 					if (clickpages.callback){
-						clickpages.getdatalist(page);
+						getdatalist(page, set.admin_class_detail, set.urls);
 						clickpages.callback(parseInt(page));
 					}
 				}
@@ -88,7 +82,8 @@ function Page(opt){
 			return clickpages.elem.children('li.active').text();
 		},
 		JumpPages:function () {
-			this.elem.next('div.pageJump').children('.button').click(function(){
+			this.elem.next('div.pageJump').children(':button').click(function(){
+				console.log(222);
 				var i = parseInt($(this).siblings('input').val());
 				if(isNaN(i)||(i<=0)||i>clickpages.num){
 					return;
@@ -98,14 +93,14 @@ function Page(opt){
 					var ele = clickpages.elem.children('li[page='+i+']');
 					clickpages.actPages(ele);
 					if (clickpages.callback){
-						clickpages.getdatalist(i);
+						getdatalist(i, set.admin_class_detail, set.urls);
 						clickpages.callback(i);
 					}
 					return;
 				}
 
 				if (clickpages.callback){
-					clickpages.getdatalist(i);
+					getdatalist(i, set.admin_class_detail, set.urls);
 					clickpages.callback(i);
 				}
 			})
@@ -172,27 +167,6 @@ function Page(opt){
 				clickpages.init({num:set.num,elem:set.elem,callback:set.callback});
 			}
 		},
-
-		//渲染表格数据函数
-		getdatalist:function(i) {
-			var data = {};
-			$('.col-lg-2 .form-control').each(function () {
-				data[$(this).attr('name')] = $(this).find("option:selected").val();
-			});
-			data['page'] = i;
-			data['admin_class_detail'] = set.admin_class_detail;
-			$.ajax({
-				url: set.urls,
-				type: "GET",
-				data: data,
-				success: function (data) {
-					$("tbody").html(data);
-				},
-				error: function (data) {
-					console.log(data);
-				},
-			});
-		},
 	};
 	if(set.num<=1){
 		$(".pagination").html('');
@@ -216,3 +190,24 @@ function Page(opt){
 		clickpages.newPages("jump",set.startnum)
 	}
 }
+
+//渲染表格数据函数
+function getdatalist(i, admin_class_detail,  urls) {
+	var data = {};
+	$('.col-lg-2 .form-control').each(function () {
+		data[$(this).attr('name')] = $(this).find("option:selected").val();
+	});
+	data['page'] = i;
+	data['admin_class_detail'] = admin_class_detail;
+	$.ajax({
+		url: urls,
+		type: "GET",
+		data: data,
+		success: function (data) {
+			$("tbody").html(data);
+		},
+		error: function (data) {
+			console.log(data);
+		},
+	});
+};

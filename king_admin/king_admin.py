@@ -5,7 +5,7 @@ enabled_admins = {}
 class BaseAdmin(object):
     list_display = []
     list_filter = []
-    list_per_page = 1
+    list_per_page = 5
 
 class CustomerAdmin(BaseAdmin):
     list_display = ['qq', 'name', 'source', 'consultant', 'consult_course', 'create_date']

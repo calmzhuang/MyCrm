@@ -40,8 +40,9 @@ def display_table_ajax(request):
         page = request.GET.get('page')
         object_list, filter_condtions = table_filter(request, admin_class)
         query_sets = paginator_class(object_list, admin_class, page)
+        str_list = ''
         for obj in query_sets:
-            str_list = '<tr>'
+            str_list += '<tr>'
             str_list += build_table_row(obj, admin_class)
             str_list += '</tr>'
         return HttpResponse(mark_safe(str_list))

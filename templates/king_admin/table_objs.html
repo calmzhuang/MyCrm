@@ -60,7 +60,9 @@
 
 {% block js %}
     <script src="/statics/js/pager.js"></script>
+    <script src="/statics/js/sortlist.js"></script>
     <script>
+        var ordername = '';
         Page({
 			num:{{ query_sets.paginator.num_pages }},		//页码数
 			startnum:{{ admin_class.list_per_page }},		//指定页码
