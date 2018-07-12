@@ -1,5 +1,5 @@
 function Page(opt){
-	var set = $.extend({num:null,startnum:1,elem:null,urls:null,admin_class_detail:null,callback:null},opt||{});
+	var set = $.extend({num:null,startnum:1,elem:null,callback:null},opt||{});
 	if(set.startnum>set.num||set.startnum<1){
 		set.startnum = 1;
 	}
@@ -70,7 +70,6 @@ function Page(opt){
 				page = clickpages.actPages(ele);
 				if (page != '' && page != page1) {
 					if (clickpages.callback){
-						getdatalist(page, set.admin_class_detail, set.urls);
 						clickpages.callback(parseInt(page));
 					}
 				}
@@ -83,7 +82,6 @@ function Page(opt){
 		},
 		JumpPages:function () {
 			this.elem.next('div.pageJump').children(':button').click(function(){
-				console.log(222);
 				var i = parseInt($(this).siblings('input').val());
 				if(isNaN(i)||(i<=0)||i>clickpages.num){
 					return;
@@ -93,14 +91,12 @@ function Page(opt){
 					var ele = clickpages.elem.children('li[page='+i+']');
 					clickpages.actPages(ele);
 					if (clickpages.callback){
-						getdatalist(i, set.admin_class_detail, set.urls);
 						clickpages.callback(i);
 					}
 					return;
 				}
 
 				if (clickpages.callback){
-					getdatalist(i, set.admin_class_detail, set.urls);
 					clickpages.callback(i);
 				}
 			})
@@ -191,23 +187,3 @@ function Page(opt){
 	}
 }
 
-//渲染表格数据函数
-function getdatalist(i, admin_class_detail,  urls) {
-	var data = {};
-	$('.col-lg-2 .form-control').each(function () {
-		data[$(this).attr('name')] = $(this).find("option:selected").val();
-	});
-	data['page'] = i;
-	data['admin_class_detail'] = admin_class_detail;
-	$.ajax({
-		url: urls,
-		type: "GET",
-		data: data,
-		success: function (data) {
-			$("tbody").html(data);
-		},
-		error: function (data) {
-			console.log(data);
-		},
-	});
-};

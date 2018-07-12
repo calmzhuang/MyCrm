@@ -6,7 +6,6 @@
 {% endblock %}
 
 {% block container %}
-    {{ admin_class.list_display }}
     <div class="panel panel-info">
           <div class="panel-heading">
             <h3 class="panel-title">Panel title</h3>
@@ -30,7 +29,7 @@
 
               <table class="table table-hover">
                   <thead>
-                    <tr>
+                    <tr style="cursor: pointer;">
                         {% for column in admin_class.list_display %}
                             <th>{{ column }}</th>
                         {% endfor %}
@@ -61,16 +60,20 @@
 {% block js %}
     <script src="/statics/js/pager.js"></script>
     <script src="/statics/js/sortlist.js"></script>
+    <script src="/statics/js/formrender.js"></script>
     <script>
-        var ordername = '';
+        var ordername = '';  //记录当前页面排序，默认为空
+        var pages = 1;  //记录当前页面页码，默认为第一页
+        var admin_class_detail = '["{{ app_name }}", "{{ table_name }}"]';  //记录当前页面app名称和表名，并以列表的方式记录
+        var urls = '{% url 'table_data_list' %}';  //记录后台数据接口
         Page({
-			num:{{ query_sets.paginator.num_pages }},		//页码数
-			startnum:{{ admin_class.list_per_page }},		//指定页码
-			elem:$('#page1'),		//指定的元素
-            urls:'{% url 'table_data_list' %}',
-            admin_class_detail:'["{{ app_name }}", "{{ table_name }}"]',
+			num: {{ query_sets.paginator.num_pages }},		//页码数
+			startnum: {{ admin_class.list_per_page }},		//指定页码
+			elem: $('#page1'),		//指定的元素
 			callback:function(n){	//回调函数
 				console.log(n);
+				getdatalist(n, admin_class_detail, urls);
+				pages = n;
 			}
 		});
     </script>

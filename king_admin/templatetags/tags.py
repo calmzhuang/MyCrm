@@ -51,11 +51,11 @@ def render_filter_ele(condtion,admin_class,filter_condtions):
     if field_obj.choices:
         selected = ''
         for choice_item in field_obj.choices:
-            print("choice",choice_item,filter_condtions.get(condtion),type(filter_condtions.get(condtion)))
+            print("choice",choice_item, filter_condtions.get(condtion), type(filter_condtions.get(condtion)))
             if filter_condtions.get(condtion) == str(choice_item[0]):
                 selected ="selected"
 
-            select_ele += '''<option value='%s' %s>%s</option>''' %(choice_item[0],selected,choice_item[1])
+            select_ele += '''<option value='%s' %s>%s</option>''' % (choice_item[0], selected, choice_item[1])
             selected =''
 
     if type(field_obj).__name__ == "ForeignKey":
@@ -63,7 +63,7 @@ def render_filter_ele(condtion,admin_class,filter_condtions):
         for choice_item in field_obj.get_choices()[1:]:
             if filter_condtions.get(condtion) == str(choice_item[0]):
                 selected = "selected"
-            select_ele += '''<option value='%s' %s>%s</option>''' %(choice_item[0],selected,choice_item[1])
+            select_ele += '''<option value='%s' %s>%s</option>''' % (choice_item[0], selected, choice_item[1])
             selected = ''
     select_ele += "</select>"
     return mark_safe(select_ele)

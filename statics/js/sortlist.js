@@ -19,5 +19,6 @@ $(function () {
            ordername = '-' + $(this).text();
            $(this).append(span_ele_bottom);
        }
+       getdatalist(pages, admin_class_detail,  urls);
    })
 });
