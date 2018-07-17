@@ -1,0 +1,52 @@
+{% extends 'data_center/data_center_index.html' %}
+{% block css %}
+    <link rel="stylesheet" href="/statics/css/bounce.css">
+{% endblock %}
+{% block container %}
+<div class="row">
+    <div class="panel panel-info">
+      <div class="panel-heading">
+        <h3 class="panel-title">Data config</h3>
+      </div>
+      <div class="panel-body">
+            <div class="row">
+                <div class="col-lg-1" style="margin-top: 20px">
+                    <button class="btn btn-info dropdown-toggle" id="btn_delete">新增</button>
+                </div>
+            </div>
+             <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>连接名称</th>
+                        <th>数据库地址</th>
+                        <th>数据库端口</th>
+                        <th>用户名</th>
+                        <th>密码</th>
+                        <th>数据库名称</th>
+                        <th>字符集</th>
+                        <th>创建时间</th>
+                        <th>操作项</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rowlist in data_list %}
+                        <tr>
+                            {% for data in rowlist.values %}
+                                <td>{{ data }}</td>
+                            {% endfor %}
+                            <td>
+                                <a href="javascript:void(0);">修改</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+             </table>
+      </div>
+    </div>
+</div>
+{% endblock %}
+{% block js %}
+    <script src="/statics/js/bounced_component.js"></script>
+    <script src="/statics/js/bounce.js"></script>
+{% endblock %}

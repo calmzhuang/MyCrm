@@ -1,7 +1,7 @@
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def table_filter(request,admin_class):
+def table_filter(request, admin_class):
     '''进行条件过滤并返回过滤后的数据'''
     filter_conditions = {}
     for k, v in request.GET.items():

@@ -1,0 +1,7 @@
+.input-group input {
+    border-radius: 4px !important;
+}
+
+.modal-body .input-group {
+    margin: 10px auto;
+}

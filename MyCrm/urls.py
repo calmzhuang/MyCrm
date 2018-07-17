@@ -21,4 +21,5 @@ urlpatterns = [
     re_path('^crm/', include("crm.urls")),
     re_path('^student/', include("student.urls")),
     re_path('^king_admin/', include("king_admin.urls")),
+    re_path('^data_center/', include("data_center.urls")),
 ]
