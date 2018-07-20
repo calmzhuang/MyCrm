@@ -16,9 +16,12 @@ def create_data_config_list(data):
         return 'fail'
 
 def update_data_config_list(data):
+    filter_conditions = {}
     result = DatabaseConfig.objects.filter(name=data.get('name'))
     if result.exists():
-        result.update(**data)
+        for k, v in data.items():
+            filter_conditions[k] = v
+        result.update(**filter_conditions)
         return 'success'
     else:
         return 'fail'

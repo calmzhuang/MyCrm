@@ -27,4 +27,6 @@ def update_data_config(request):
         data = request.POST
         result = update_data_config_list(data)
         if result == 'fail':
-            return HttpResponse('无此链接信息')
+            return HttpResponse('无此链接信息！')
+        else:
+            return HttpResponse('数据修改成功！')
